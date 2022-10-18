@@ -10,7 +10,7 @@
                 Tags: <span v-for="(tag, index) in post.tags" :key="index">{{tag.name}}; </span>
             </div>
             <p class="card-text" v-else>No Tags</p>
-            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            <router-link :to="{name: 'post-page', params: {slug: post.slug}}" class="btn btn-primary">View Post</router-link>
         </div>
     </div>
 

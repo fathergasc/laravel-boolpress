@@ -7,6 +7,7 @@ Vue.use(VueRouter);
 
 import ContactUsPage from './pages/ContactUsPage.vue';
 import PostsPage from './pages/PostsPage.vue';
+import ShowSinglePost from './pages/ShowSinglePost.vue';
 import AboutUsPage from './pages/AboutUsPage.vue';
 import HomePage from './pages/HomePage.vue';
 import FourOhFourPage from './pages/FourOhFourPage.vue'
@@ -23,6 +24,11 @@ const router = new VueRouter({
             path: '/posts',
             name: 'posts',
             component: PostsPage,
+        },
+        {
+            path: '/posts/:slug',
+            name: 'post-page',
+            component: ShowSinglePost,
         },
         {
             path: '/contact-us',
