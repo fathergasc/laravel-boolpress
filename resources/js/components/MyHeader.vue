@@ -9,8 +9,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active" v-for="(link, index) in navBarLinks" :key="index">
-                        <a class="nav-link" :href="link.url">{{link.text}}</a>
+                        <router-link class="nav-link" :to="{ name: link.route }">{{link.text}}</router-link>
                     </li>
+                    <li class="nav-item active"><a class="nav-link" href="/admin">Back-Office</a></li>
                 </ul>
             </div>
         </nav>
@@ -25,23 +26,19 @@ export default {
             navBarLinks: [
                 {
                     text: 'Home',
-                    url: '#'
+                    route: 'home'
                 },
                 {
                     text: 'Posts',
-                    url: '#'
+                    route: 'posts'
                 },
                 {
                     text: 'Contact Us',
-                    url: '#'
+                    route: 'contact-us'
                 },
                 {
                     text: 'About Us',
-                    url: '#'
-                },
-                {
-                    text: 'Back-Office',
-                    url: '/admin'
+                    route: 'about-us'
                 },
             ]
         };

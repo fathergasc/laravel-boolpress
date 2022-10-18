@@ -1914,19 +1914,16 @@ __webpack_require__.r(__webpack_exports__);
     return {
       navBarLinks: [{
         text: 'Home',
-        url: '#'
+        route: 'home'
       }, {
         text: 'Posts',
-        url: '#'
+        route: 'posts'
       }, {
         text: 'Contact Us',
-        url: '#'
+        route: 'contact-us'
       }, {
         text: 'About Us',
-        url: '#'
-      }, {
-        text: 'Back-Office',
-        url: '/admin'
+        route: 'about-us'
       }]
     };
   }
@@ -2064,17 +2061,19 @@ var render = function render() {
     }
   }, [_c("ul", {
     staticClass: "navbar-nav mr-auto"
-  }, _vm._l(_vm.navBarLinks, function (link, index) {
+  }, [_vm._l(_vm.navBarLinks, function (link, index) {
     return _c("li", {
       key: index,
       staticClass: "nav-item active"
-    }, [_c("a", {
+    }, [_c("router-link", {
       staticClass: "nav-link",
       attrs: {
-        href: link.url
+        to: {
+          name: link.route
+        }
       }
-    }, [_vm._v(_vm._s(link.text))])]);
-  }), 0)])])]);
+    }, [_vm._v(_vm._s(link.text))])], 1);
+  }), _vm._v(" "), _vm._m(1)], 2)])])]);
 };
 
 var staticRenderFns = [function () {
@@ -2091,6 +2090,18 @@ var staticRenderFns = [function () {
   }, [_c("span", {
     staticClass: "navbar-toggler-icon"
   })]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("li", {
+    staticClass: "nav-item active"
+  }, [_c("a", {
+    staticClass: "nav-link",
+    attrs: {
+      href: "/admin"
+    }
+  }, [_vm._v("Back-Office")])]);
 }];
 render._withStripped = true;
 
