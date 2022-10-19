@@ -64,7 +64,13 @@ class PostController extends Controller
      */
     public function show($slug)
     {
-        $post = Post::where('slug', $slug)->first();
+        $post = Post::where('slug', $slug)->with('category', 'tags')->first();
+
+        if ($post->cover_image) {
+            $post->cover_image = asset('storage/' .$post->cover_image);
+        } else {
+            $post->cover_image = asset('img/no_cover_default.jpg');
+        }
 
 
         if ($post) {

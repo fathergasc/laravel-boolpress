@@ -1916,7 +1916,7 @@ __webpack_require__.r(__webpack_exports__);
         text: 'Home',
         route: 'home'
       }, {
-        text: 'Posts',
+        text: 'Blog',
         route: 'posts'
       }, {
         text: 'Contact Us',
@@ -2088,11 +2088,18 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ShowSinglePost',
+  data: function data() {
+    return {
+      singlePost: null
+    };
+  },
   methods: {
     getPostSlug: function getPostSlug() {
+      var _this = this;
+
       var slug = this.$route.params.slug;
       axios.get('/api/posts/' + slug).then(function (response) {
-        console.log(response);
+        _this.singlePost = response.data.results;
       });
     }
   },
@@ -2220,7 +2227,9 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("main", [_c("router-view")], 1);
+  return _c("main", {
+    staticClass: "py-3"
+  }, [_c("router-view")], 1);
 };
 
 var staticRenderFns = [];
@@ -2259,19 +2268,20 @@ var render = function render() {
   }, [_c("h5", {
     staticClass: "card-title"
   }, [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("p", {
-    staticClass: "card-text"
-  }, [_vm._v(_vm._s(_vm.post.content.length < 40 ? _vm.post.content : _vm.cutText(_vm.post.content, 40)))]), _vm._v(" "), _c("p", {
-    staticClass: "card-text"
-  }, [_vm._v(_vm._s(_vm.post.category ? _vm.post.category.name : "No Category"))]), _vm._v(" "), _vm.post.tags.length > 0 ? _c("div", {
+    staticClass: "card-text mb-5"
+  }, [_vm._v(_vm._s(_vm.post.content.length < 40 ? _vm.post.content : _vm.cutText(_vm.post.content, 40)))]), _vm._v(" "), _c("div", {
+    staticClass: "card-text my-3"
+  }, [_vm._v(_vm._s(_vm.post.category ? "Category: " + _vm.post.category.name : "No Category"))]), _vm._v(" "), _vm.post.tags.length > 0 ? _c("div", {
     staticClass: "card-text"
   }, [_vm._v("\n            Tags: "), _vm._l(_vm.post.tags, function (tag, index) {
     return _c("span", {
-      key: index
-    }, [_vm._v(_vm._s(tag.name) + "; ")]);
-  })], 2) : _c("p", {
+      key: index,
+      staticClass: "mx-2 badge badge-pill badge-success"
+    }, [_vm._v(_vm._s(tag.name) + " ")]);
+  })], 2) : _c("div", {
     staticClass: "card-text"
-  }, [_vm._v("No Tags")]), _vm._v(" "), _c("router-link", {
-    staticClass: "btn btn-primary",
+  }, [_vm._v("Tags: -")]), _vm._v(" "), _c("router-link", {
+    staticClass: "btn btn-primary my-3",
     attrs: {
       to: {
         name: "post-page",
@@ -2516,17 +2526,35 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm._m(0);
+  return _vm.singlePost ? _c("div", {
+    staticClass: "container py-3"
+  }, [_c("h1", {
+    staticClass: "my-3"
+  }, [_vm._v(_vm._s(_vm.singlePost.title))]), _vm._v(" "), _c("img", {
+    staticClass: "w-100 mb-5",
+    attrs: {
+      src: _vm.singlePost.cover_image,
+      alt: ""
+    }
+  }), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.singlePost.content))]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_vm._v("Category: " + _vm._s(_vm.singlePost.category ? _vm.singlePost.category.name : "-"))]), _vm._v(" "), _vm.singlePost.tags.length > 0 ? _c("div", [_vm._v("\n        Tags:\n        "), _vm._l(_vm.singlePost.tags, function (tag, index) {
+    return _c("span", {
+      key: index
+    }, [_c("span", {
+      staticClass: "mx-2 badge badge-pill badge-success"
+    }, [_vm._v(_vm._s(tag.name))])]);
+  })], 2) : _c("div", [_vm._v("Tags: -")]), _vm._v(" "), _c("router-link", {
+    staticClass: "btn btn-primary mt-3",
+    attrs: {
+      to: {
+        name: "posts"
+      }
+    }
+  }, [_vm._v("Back")])], 1) : _vm._e();
 };
 
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "container"
-  }, [_c("h1", [_vm._v("single post page")])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -18714,14 +18742,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/js/pages/ShowSinglePost.vue ***!
   \***********************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ShowSinglePost_vue_vue_type_template_id_3e1db9a4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowSinglePost.vue?vue&type=template&id=3e1db9a4& */ "./resources/js/pages/ShowSinglePost.vue?vue&type=template&id=3e1db9a4&");
 /* harmony import */ var _ShowSinglePost_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowSinglePost.vue?vue&type=script&lang=js& */ "./resources/js/pages/ShowSinglePost.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ShowSinglePost_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ShowSinglePost_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -18751,7 +18780,7 @@ component.options.__file = "resources/js/pages/ShowSinglePost.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/pages/ShowSinglePost.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

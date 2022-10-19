@@ -29,7 +29,7 @@ export default {
                     route: 'home'
                 },
                 {
-                    text: 'Posts',
+                    text: 'Blog',
                     route: 'posts'
                 },
                 {
