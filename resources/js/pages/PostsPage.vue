@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import SinglePost from '../components/SinglePost.vue';
+import SinglePost from '../components/SinglePost.vue';                                  
 
     export default {
         components: {
