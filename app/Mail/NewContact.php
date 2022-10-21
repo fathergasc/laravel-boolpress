@@ -30,6 +30,6 @@ class NewContact extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.new-contact'); //if protected:  return $this->view('emails.new-contact', ['lead' => $this->lead])
+        return $this->replyTo($this->lead->email)->view('emails.new-contact'); //if protected:  return $this->view('emails.new-contact', ['lead' => $this->lead])
     }
 }
