@@ -8,7 +8,7 @@
 
 
     <h4>Related posts:</h4>
-    @if (count($category->posts))
+    @if (count($category->posts->withTrashed()->get())) <!--called posts as a method and not as an attribute because of withTrashed(), without it it'd be "(count($category->posts)" -->
     <div>
     <table class="table table-dark table-striped">
         <thead>
@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($category->posts as $post)
+            @foreach ($category->posts()->withTrashed->get() as $post)
             <th scope="row">{{$post->id}}</th>
             <td>{{$post->title}}</td>
             <td>{{$post->slug}}</td>

@@ -20,7 +20,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        //withTrashed includes soft deleted posts
+        $posts = Post::withTrashed()->get();
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -62,7 +63,7 @@ class PostController extends Controller
         $img_path = Storage::put('cover', $data['image']);
         $data['cover_image'] = $img_path;
         }
-        
+
         $post = new Post();
 
         $post->fill($data);
@@ -151,12 +152,12 @@ class PostController extends Controller
 
     protected function generateSlug($title) {
         $slug = Str::slug($title, '-');
-        $checkPost = Post::where('slug', $slug)->first();
+        $checkPost = Post::withTrashed()->where('slug', $slug)->first();
         $counter = 1;
         while($checkPost) {
             $slug = Str::slug($title . '-' . $counter, '-');
             $counter++;
-            $checkPost = Post::where('slug', $slug)->first();
+            $checkPost = Post::withTrashed()->where('slug', $slug)->first();
         }
 
         return $slug;
@@ -170,13 +171,32 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
+        /*not necessary only if you're using softDeletes() */
+        /*
         if ($post->cover_image) {
             Storage::delete($post->cover_image);
         };
 
         $post->tags()->sync([]);
+        */
         $post->delete();
         return redirect()->route('admin.posts.index')->with('status', 'Post deleted!');;
+    }
+
+    /*don't use dependency injection */
+    public function forceDelete($id) {
+
+        $post = Post::withTrashed()->where('id', $id)->first();
+
+        if ($post->cover_image) {
+            Storage::delete($post->cover_image);
+        };
+
+        $post->tags()->sync([]);
+        $post->forceDelete();
+
+        return redirect()->route('admin.posts.index')->with('status', "Post permanently deleted");
     }
 
     public function deleteCoverImage(Post $post) {
@@ -188,5 +208,11 @@ class PostController extends Controller
         $post->save();
 
         return redirect()->route('admin.posts.edit', ['post' => $post->id])->with('status', 'Cover image deleted!');
+    }
+
+    public function restore($id) {
+        $post = Post::withTrashed()->where('id', $id)->first();
+        $post->restore();
+        return redirect()->route('admin.posts.index')->with('status', 'Post restored!');
     }
 }

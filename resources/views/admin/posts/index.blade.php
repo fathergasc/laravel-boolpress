@@ -38,15 +38,33 @@
                             @endforeach
                         </td>
                         <td>
-                            <a class="btn btn-warning m-1" href="{{route('admin.posts.show', ['post' => $post->id])}}">Show</a>
-                            <a class="btn btn-info m-1" href="{{route('admin.posts.edit', ['post' => $post->id])}}">Edit</a>
-                            <form class="m-1 d-inline" action="{{route('admin.posts.destroy', ['post' => $post->id])}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this entry?')">
 
-                                @csrf
-                                @method('DELETE')
-                                <input class="btn btn-danger" type="submit" value="Delete">
 
-                            </form>
+                            @if($post->deleted_at)
+
+                                <a class="btn btn-success m-1" href="{{route('admin.posts.restore', ['post' => $post->id])}}">Restore</a>
+
+                                <form class="m-1 d-inline" action="{{route('admin.posts.forceDelete', ['post' => $post->id])}}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete this entry?')">
+
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" type="submit">Force Delete</button>
+
+                                </form>
+
+                            @else
+                                <a class="btn btn-warning m-1" href="{{route('admin.posts.show', ['post' => $post->id])}}">Show</a>
+                                <a class="btn btn-info m-1" href="{{route('admin.posts.edit', ['post' => $post->id])}}">Edit</a>
+                                <form class="m-1 d-inline" action="{{route('admin.posts.destroy', ['post' => $post->id])}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this entry?')">
+
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" type="submit">Soft Delete</button>
+
+                                </form>
+                            @endif
+
+
                         </td>
                     </tr>
                     @endforeach

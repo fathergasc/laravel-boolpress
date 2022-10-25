@@ -25,7 +25,10 @@ Route::middleware('auth')
         Route::resource('categories', 'CategoryController');
         Route::resource('tags', 'TagController');
 
+        Route::delete('posts/forceDelete/{post}', 'PostController@forceDelete' )->name('posts.forceDelete');
         Route::delete('posts/deleteCoverImage/{post}', 'PostController@deleteCoverImage' )->name('posts.deleteCoverImage');
+
+        Route::get('posts/restore/{post}', 'PostController@restore')->name('posts.restore');
     });
 
 Route::get('{any?}', function () {
