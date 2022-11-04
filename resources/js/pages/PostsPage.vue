@@ -10,7 +10,7 @@
                 <h1 class="col-8">Posts</h1>
                 <div class="col-8">
                     <select name="categories" id="categories" v-model="selectedCategory" @change="getPosts(currentPage)">
-                        <option value="">Choose category</option>
+                        <option value=null>Choose a category</option>
                         <option v-for="(category, index) in categories" :key="index" :value="category.id">{{category.name}}</option>
                     </select>
                 </div>
@@ -18,7 +18,7 @@
                     <SinglePost v-for="(post, index) in posts" :key="index" :post="post" />
                 </div>
                 <div class="col-8 m-5" v-else>
-                    <h3  >No posts</h3>
+                    <h3>No posts</h3>
                     <p>Please, select another category.</p>
                 </div>
 

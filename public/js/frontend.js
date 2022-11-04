@@ -2636,9 +2636,9 @@ var render = function render() {
     }
   }, [_c("option", {
     attrs: {
-      value: ""
+      value: "null"
     }
-  }, [_vm._v("Choose category")]), _vm._v(" "), _vm._l(_vm.categories, function (category, index) {
+  }, [_vm._v("Choose a category")]), _vm._v(" "), _vm._l(_vm.categories, function (category, index) {
     return _c("option", {
       key: index,
       domProps: {
