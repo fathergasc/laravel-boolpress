@@ -1,6 +1,6 @@
 <template>
 
-    <div class="card col-8 my-3" style="width: 18rem;">
+    <div class="card my-3" >
         <img :src="post.cover_image" class="card-img-top w-100 p-1">
         <div class="card-body" >
             <h5 class="card-title">{{post.title}}</h5>

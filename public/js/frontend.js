@@ -2082,6 +2082,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       posts: [],
+      categories: [],
+      selectedCategory: null,
       loadingInProgress: true,
       currentPage: 1,
       lastPage: null
@@ -2095,18 +2097,27 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/posts', {
         params: {
-          page: page
+          page: this.currentPage,
+          category: this.selectedCategory
         }
       }).then(function (response) {
         _this.posts = response.data.results.data;
         _this.loadingInProgress = false;
         _this.currentPage = response.data.results.current_page;
-        _this.lastPage = response.data.results.last_page;
+        _this.lastPage = response.data.results.last_page; //console.log(response);
+      });
+    },
+    getCategories: function getCategories() {
+      var _this2 = this;
+
+      axios.get('/api/categories').then(function (response) {
+        _this2.categories = response.data.results;
         console.log(response);
       });
     }
   },
   mounted: function mounted() {
+    this.getCategories();
     this.getPosts(1);
   }
 });
@@ -2290,10 +2301,7 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "card col-8 my-3",
-    staticStyle: {
-      width: "18rem"
-    }
+    staticClass: "card my-3"
   }, [_c("img", {
     staticClass: "card-img-top w-100 p-1",
     attrs: {
@@ -2600,14 +2608,55 @@ var render = function render() {
     staticClass: "row d-flex justify-content-center"
   }, [_c("h1", {
     staticClass: "col-8"
-  }, [_vm._v("Posts")]), _vm._v(" "), _vm._l(_vm.posts, function (post, index) {
+  }, [_vm._v("Posts")]), _vm._v(" "), _c("div", {
+    staticClass: "col-8"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.selectedCategory,
+      expression: "selectedCategory"
+    }],
+    attrs: {
+      name: "categories",
+      id: "categories"
+    },
+    on: {
+      change: [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.selectedCategory = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }, function ($event) {
+        return _vm.getPosts(_vm.currentPage);
+      }]
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("Choose category")]), _vm._v(" "), _vm._l(_vm.categories, function (category, index) {
+    return _c("option", {
+      key: index,
+      domProps: {
+        value: category.id
+      }
+    }, [_vm._v(_vm._s(category.name))]);
+  })], 2)]), _vm._v(" "), _vm.posts.length > 0 ? _c("div", {
+    staticClass: "col-8"
+  }, _vm._l(_vm.posts, function (post, index) {
     return _c("SinglePost", {
       key: index,
       attrs: {
         post: post
       }
     });
-  }), _vm._v(" "), _c("nav", {
+  }), 1) : _c("div", {
+    staticClass: "col-8 m-5"
+  }, [_c("h3", [_vm._v("No posts")]), _vm._v(" "), _c("p", [_vm._v("Please, select another category.")])]), _vm._v(" "), _c("nav", {
     staticClass: "col-8",
     staticStyle: {
       "padding-left": "0"
@@ -2644,7 +2693,7 @@ var render = function render() {
         return _vm.getPosts(_vm.currentPage + 1);
       }
     }
-  }, [_vm._v("Next")])])])])], 2)]);
+  }, [_vm._v("Next")])])])])])]);
 };
 
 var staticRenderFns = [function () {

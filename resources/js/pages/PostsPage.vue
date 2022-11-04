@@ -8,8 +8,21 @@
             </div>
             <div v-else class="row d-flex justify-content-center">
                 <h1 class="col-8">Posts</h1>
+                <div class="col-8">
+                    <select name="categories" id="categories" v-model="selectedCategory" @change="getPosts(currentPage)">
+                        <option value="">Choose category</option>
+                        <option v-for="(category, index) in categories" :key="index" :value="category.id">{{category.name}}</option>
+                    </select>
+                </div>
+                <div class="col-8" v-if="posts.length > 0">
+                    <SinglePost v-for="(post, index) in posts" :key="index" :post="post" />
+                </div>
+                <div class="col-8 m-5" v-else>
+                    <h3  >No posts</h3>
+                    <p>Please, select another category.</p>
+                </div>
 
-                <SinglePost v-for="(post, index) in posts" :key="index" :post="post"/>
+
 
 
                 <nav class="col-8" style="padding-left:0;">
@@ -25,7 +38,7 @@
 </template>
 
 <script>
-import SinglePost from '../components/SinglePost.vue';                                  
+import SinglePost from '../components/SinglePost.vue';
 
     export default {
         components: {
@@ -35,6 +48,8 @@ import SinglePost from '../components/SinglePost.vue';
         data() {
             return {
                 posts: [],
+                categories: [],
+                selectedCategory: null,
                 loadingInProgress: true,
                 currentPage: 1,
                 lastPage: null,
@@ -46,7 +61,8 @@ import SinglePost from '../components/SinglePost.vue';
 
                 axios.get('/api/posts', {
                     params: {
-                        page: page
+                        page: this.currentPage,
+                        category: this.selectedCategory
                     }
                 })
                 .then((response) => {
@@ -54,12 +70,21 @@ import SinglePost from '../components/SinglePost.vue';
                     this.loadingInProgress = false;
                     this.currentPage = response.data.results.current_page;
                     this.lastPage = response.data.results.last_page
-                    console.log(response);
+                    //console.log(response);
                 })
             },
+            getCategories() {
+                axios.get('/api/categories')
+                .then((response) => {
+                    this.categories = response.data.results;
+                    console.log(response);
+                })
+            }
         },
         mounted() {
+            this.getCategories();
             this.getPosts(1);
+
         }
     };
 </script>

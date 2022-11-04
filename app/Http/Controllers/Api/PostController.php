@@ -15,9 +15,40 @@ class PostController extends Controller
      */
     public function index()
     {
+        //alternative to (Request $request) as function param (like in the store function below)
+        $data = request()->all();
+
+        //without paginate() you have to use get()
         //$posts = Post::with('category', 'tags')->get();
 
-        $posts = Post::with('category', 'tags')->paginate(3);
+        if(array_key_exists('category', $data)) {
+            $posts = Post::with('category', 'tags')->where('category_id', $data['category'])->paginate(3);
+        } else {
+            $posts = Post::with('category', 'tags')->paginate(3);
+        }
+
+        //alternative to previous query syntax
+        /*
+            $posts = Post::with('category', 'tags');
+
+            if(array_key_exists('category', $data)) {
+                $posts = $posts->where('category_id', $data['category']);
+            }
+
+            $posts = $posts->paginate(3);
+        */
+
+
+
+
+        // display data in storage\logs\laravel.log
+
+        \Log::info('---------------------Start---------------------');
+        \Log::info('Posts recovered through API');
+        \Log::info($data);
+        \Log::info('------------------------End-------------------');
+
+
 
         foreach ($posts as $post) {
             if ($post->cover_image) {
