@@ -3,7 +3,6 @@
 @section('content')
     <div class="container">
         {{-- <a href="{{route('admin.tags.create')}}" class="btn btn-secondary my-1">Add Tag</a> --}}
-        <div>
             <table class="table table-dark table-striped">
                 <thead>
                 <tr>
