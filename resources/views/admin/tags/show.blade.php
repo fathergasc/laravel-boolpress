@@ -8,7 +8,7 @@
 
 
     <h4>Related posts:</h4>
-    @if (count($tag->posts))
+    @if (count($tag->posts()->withTrashed()->get()))
     <table class="table table-dark table-striped">
         <thead>
             <tr>
@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($tag->posts as $post)
+            @foreach ($tag->posts()->withTrashed()->get() as $post)
             <tr>
                 <th scope="row">{{$post->id}}</th>
                 <td>{{$post->title}}</td>
