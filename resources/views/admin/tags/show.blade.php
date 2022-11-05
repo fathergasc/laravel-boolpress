@@ -8,7 +8,7 @@
 
 
     <h4>Related posts:</h4>
-    @if (count($tag->posts()->withTrashed()->get()))
+    @if (count($tag->posts()->withTrashed()->get())) <!--called posts as a method and not as an attribute because of withTrashed(), without it it'd be "(count($tags->posts)" -->
     <table class="table table-dark table-striped">
         <thead>
             <tr>
